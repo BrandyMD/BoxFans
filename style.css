@@ -1,0 +1,270 @@
+
+ body {
+background-color: slategrey;
+display: flex;
+flex-direction: column;
+min-height: 100vh;     
+}
+footer {
+    flex: 50px;
+    margin-top: auto;
+    text-align: center;
+    font-size: 35px;
+    padding-top: 20px;
+}
+.rotors {
+    position: absolute;
+    margin: auto;
+    width: 80%;
+    -webkit-animation:spin 0s linear infinite;
+    -moz-animation:spin 0s linear infinite;
+    animation:spin 0s linear infinite; */
+}
+@-moz-keyframes spin { 100% { -moz-transform:rotate(360deg);}}
+@-webkit-keyframes spin { 100% { -webkit-transform:rotate(360deg);}}
+@keyframes spin { 100% { -webkit-transform:rotate(360deg);}}
+
+.box { 
+    margin: auto;
+    width: 80%;
+    position: relative;
+    z-index: 1;
+    top: -10px;
+}
+#menu {
+    position: relative;
+    font-size: 60px;
+    justify-content: center;
+
+}
+#power {
+    border-radius: 5px;
+}
+#one {
+    border-radius: 5px;
+}
+#two {
+    border-radius: 5px;
+}
+#three {
+    border-radius: 5px;
+}
+.btn-group {
+    height: 90px;
+    width: 10px;
+    justify-content: center;
+}
+label {
+    font-size: 25px;
+}
+article {
+    display: grid;
+    grid-template-columns: 1fr minmax(0,8.5in) 1fr;
+    
+    height: 100vh;
+}
+article * {
+    grid-column: 2/3;
+}
+/* @media only screen and (max-width:600px) {
+    #powerButtons {
+    height: 60px;
+    width:75%;
+    position: relative;
+    text-align: center;
+    display: block;
+    }
+    #fanBox {
+        margin-top: 70px;
+        width: 100%;
+        height: auto;
+    }
+    #blades {
+        width: 100%;
+        height: auto;
+        margin-top: -170px;
+    }
+    footer {
+        flex: 50px;
+        margin-top: auto;
+        text-align: center;
+        font-size: 35px;
+        padding-top: 20px;
+        
+    }
+}
+@media only screen and (min-width:600px) and (max-width:1125px) {
+    #powerButtons {
+    height: 60px;
+    width:55%;
+    position: relative;
+    text-align: center;
+        display: block;
+    }
+    #fanBox {
+        margin-top: -150px;
+        width: 60%;
+        height: auto;
+    }
+    #blades {
+        width: 50%;
+        height: auto;
+        margin-top: -135px;
+        display:block;
+    }
+        footer {
+        text-align: center;
+        flex: 50px;
+        margin-top: auto;
+        font-size: 35px;
+        padding-top: 20px;
+    }
+    #anime {
+        display: block;
+    }
+}
+@media only screen and (min-width:1125px) and (max-width:1200px) {
+    #powerButtons {
+    height: 60px;
+    width:30%;
+    position: relative;
+    text-align: center;
+    }
+    #fanBox {
+        margin-top: -150px;
+        width: 40%;
+        height: auto;
+    }
+    #blades {
+        width: 30%;
+        height: auto;
+        margin-top: -135px;
+        display:block;
+    }
+        footer {
+        text-align: center;
+        flex: 50px;
+        margin-top: auto;
+        font-size: 35px;
+        padding-top: 20px;
+    }
+    #anime {
+        display: block;
+    }
+}
+/*@media only screen and (max-width:1200px) {
+    #powerButtons {
+    height: 60px;
+    width:100%;
+    position: relative;
+    text-align: center;
+    }
+    #fanBox {
+        margin-top: 70px;
+        width: 100%;
+        height: auto;
+    }
+    #blades {
+        width: 100%;
+        height: auto;
+        margin-top: -170px;
+        display:block;
+    }
+        footer {
+        text-align: center;
+        flex: 50px;
+        margin-top: auto;
+        font-size: 35px;
+        padding-top: 20px;
+    }
+    #anime {
+        display: block;
+    }
+}
+
+@media only screen and (max-width:321px) {
+    #powerButtons {
+    height: 60px;
+    width:75%;
+    position: relative;
+    text-align: center;
+    }
+    #fanBox {
+        margin-top: 70px;
+        width: 100%;
+        height: auto;
+    }
+    #blades {
+        width: 90%;
+        height: auto;
+        display:block;
+    }
+        footer {
+        text-align: center;
+        flex: 50px;
+        margin-top: auto;
+        font-size: 35px;
+        padding-top: 20px;
+    }
+    #anime {
+        display: block;
+    }
+
+}
+@media only screen and (min-width:150px) and (max-width:281px){
+    #powerButtons {
+    height: 60px;
+    width:75%;
+    position: relative;
+    text-align: center;
+    }
+    #fanBox {
+        margin-top: 70px;
+        width: 100%;
+        height: auto;
+    }
+    #blades {
+        width: 90%;
+        height: auto;
+        display:block;
+        padding-bottom: -30px;
+    }
+        footer {
+        text-align: center;
+        flex: 50px;
+        margin-top: auto;
+        font-size: 35px;
+        padding-top: 20px;
+    }
+    #anime {
+        display: block;
+    }   
+}
+@media only screen and (max-width:281px) {
+    #anime {
+        width: 60%;
+        height: auto;
+        margin-top: 1rem;
+    }
+    #blades {
+        width: 50%;
+        height: auto;
+        margin-bottom: 3rem;
+    }
+    @media only screen and (max-width:224px) {
+    #anime {
+        width: 60%;
+        height: auto;
+        margin-top: 1.5rem;
+    }
+    #blades {
+        width: 50%;
+        height: auto;
+        margin-bottom: 3rem;
+    }
+        footer {
+            font-size: 15px;
+    }
+        
+}
+/*
