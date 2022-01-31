@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, viewport-fit=cover" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="format-detection" content="telephone=no" />
+
+<!-- to avoid the warning of content security policy -->
+<meta http-equiv="Content-Security-Policy" content="default-src * gap://ready file:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src * 'unsafe-inline' 'unsafe-eval'">
+    
+<link rel="stylesheet" href="style.css">
+<script src="script.js" type="text/javascript"></script>
+    
+
+
+<title>Hello World</title>
+<script>
+  // fix wp8 view port issue, see:
+  // https://github.com/floatinghotpot/cordova-admob-pro/issues/109
+  // https://coderwall.com/p/zk_2la/responsive-design-in-ie-10-on-windows-phone-8
+  // http://stackoverflow.com/questions/24007577/windows-phone-8-viewport-issue
+(function() {
+  if ("-ms-user-select" in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/)) {
+    var msViewportStyle = document.createElement("style");
+    msViewportStyle.appendChild(
+      document.createTextNode("@-ms-viewport{width:auto!important}")
+    );
+    document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+  }
+})();
+</script>
+
+<!-- optional -->
+<script type="text/javascript" src="jquery-1.9.js"></script>
+
+<!-- must-have, which will be created by cordova prepare/build -->
+<script type="text/javascript" src="cordova.js"></script>
+    
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<style type="text/css">
+body {
+width: 100%;
+height: 100%;
+margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: gray;
+  color: white;
+}
+
+div#fullpage {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0px solid red;
+  text-align: center;
+  vertical-align: middle;
+}
+
+select, textarea {
+  width: calc(100% - 20px);
+  padding: 0px;
+  margin: 5px;
+}
+body {
+background-color: slategrey;
+display: flex;
+flex-direction: column;
+min-height: 100vh;     
+}
+footer {
+    flex: 50px;
+    margin-top: auto;
+    text-align: center;
+    font-size: 35px;
+    padding-top: 20px;
+}
+.rotors {
+    position: absolute;
+    margin: auto;
+    width: 80%;
+    -webkit-animation:spin 0s linear infinite;
+    -moz-animation:spin 0s linear infinite;
+    animation:spin 0s linear infinite; */
+}
+@-moz-keyframes spin { 100% { -moz-transform:rotate(360deg);}}
+@-webkit-keyframes spin { 100% { -webkit-transform:rotate(360deg);}}
+@keyframes spin { 100% { -webkit-transform:rotate(360deg);}}
+
+.box { 
+    margin: auto;
+    width: 80%;
+    position: relative;
+    z-index: 1;
+    top: -10px;
+}
+#menu {
+    position: relative;
+    font-size: 60px;
+    justify-content: center;
+
+}
+#power {
+    border-radius: 5px;
+}
+#one {
+    border-radius: 5px;
+}
+#two {
+    border-radius: 5px;
+}
+#three {
+    border-radius: 5px;
+}
+.btn-group {
+    height: 90px;
+    width: 10px;
+    justify-content: center;
+}
+label {
+    font-size: 25px;
+}
+article {
+    display: grid;
+    grid-template-columns: 1fr minmax(0,8.5in) 1fr;
+    
+    height: 100vh;
+}
+article * {
+    grid-column: 2/3;
+}
+
+</style>
+</head>
+
+<body>
+<script>
+  // place our admob ad unit id here
+  var admobid = {};
+  if( /(android)/i.test(navigator.userAgent) ) {
+    admobid = { // for Android
+      banner: 'ca-app-pub-3940256099942544/6300978111',
+      interstitial: 'ca-app-pub-3940256099942544/1033173712',
+      rewardvideo: 'ca-app-pub-3940256099942544/5224354917',
+    };
+  } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+    admobid = { // for iOS
+      banner: 'ca-app-pub-3940256099942544/2934735716',
+      interstitial: 'ca-app-pub-3940256099942544/4411468910',
+      rewardvideo: 'ca-app-pub-3940256099942544/1712485313',
+    };
+  } else {
+    admobid = { // for Windows Phone, deprecated
+      banner: '',
+      interstitial: '',
+      rewardvideo: '',
+    };
+  }
+
+  function createSelectedBanner(){
+    if(AdMob) AdMob.createBanner({
+      adId: admobid.banner,
+      overlap: $('#overlap').is(':checked'),
+      offsetTopBar: $('#offsetTopBar').is(':checked'),
+      adSize: $('#adSize').val(),
+      position: $('#adPosition').val(),
+    });
+  }
+
+  function showBannerAtPosition(){
+    if(AdMob) AdMob.showBanner( $('#adPosition').val() );
+  }
+
+  function onDeviceReady() {
+    if (! AdMob) { alert( 'admob plugin not ready' ); return; }
+
+    initAd();
+
+    // display a banner at startup
+    createSelectedBanner();
+  }
+
+  function initAd(){
+    AdMob.getAdSettings(function(info){
+      console.log('adId: ' + info.adId + '\n' + 'adTrackingEnabled: ' + info.adTrackingEnabled);
+    }, function(){
+      console.log('failed to get user ad settings');
+    });
+
+    AdMob.setOptions({
+      // adSize: 'SMART_BANNER',
+      position: AdMob.AD_POSITION.BOTTOM_CENTER,
+      isTesting: true, // set to true, to receiving test ad for testing purpose
+      bgColor: 'black', // color name, or '#RRGGBB'
+      // autoShow: true // auto show interstitial ad when loaded, set to false if prepare/show
+      // offsetTopBar: false, // avoid overlapped by status bar, for iOS7+
+    });
+
+    // new events, with variable to differentiate: adNetwork, adType, adEvent
+    $(document).on('onAdFailLoad', function(e){
+      // when jquery used, it will hijack the event, so we have to get data from original event
+      if(typeof e.originalEvent !== 'undefined') e = e.originalEvent;
+      var data = e.detail || e.data || e;
+
+      alert('error: ' + data.error +
+          ', reason: ' + data.reason +
+          ', adNetwork:' + data.adNetwork +
+          ', adType:' + data.adType +
+          ', adEvent:' + data.adEvent); // adType: 'banner', 'interstitial', etc.
+    });
+    $(document).on('onAdLoaded', function(e){
+        if(typeof e.originalEvent !== 'undefined') e = e.originalEvent;
+        var data = e.data || e;
+
+        if(data.adType === 'interstitial') {
+            $('#h3_full').text('Interstitial Ready');
+            $('#btn_showfull').prop('disabled', false);
+
+        } else if(data.adType === 'rewardvideo') {
+            $('#h3_video').text('Rewarded Video Ready');
+            $('#btn_showvideo').prop('disabled', false);
+        }
+    });
+    $(document).on('onAdPresent', function(e){
+    });
+    $(document).on('onAdLeaveApp', function(e){
+    });
+    $(document).on('onAdDismiss', function(e){
+        if(typeof e.originalEvent !== 'undefined') e = e.originalEvent;
+        var data = e.data || e;
+
+        if(data.adType === 'interstitial') {
+            $('#h3_full').text('Interstitial');
+            $('#btn_showfull').prop('disabled', true);
+
+        } else if(data.adType === 'rewardvideo') {
+            $('#h3_video').text('Rewarded Video');
+            $('#btn_showvideo').prop('disabled', true);
+        }
+    });
+
+    $('#btn_create').click(createSelectedBanner);
+    $('#btn_remove').click(function(){
+      AdMob.removeBanner();
+    });
+
+    $('#btn_show').click(showBannerAtPosition);
+    $('#btn_hide').click(function(){
+      AdMob.hideBanner();
+    });
+
+    // test interstitial ad
+    $('#btn_prepare').click(function(){
+      AdMob.prepareInterstitial({
+        adId:admobid.interstitial,
+        autoShow: $('#autoshow').is(':checked'),
+      });
+    });
+
+    $('#btn_showfull').click(function(){
+      AdMob.showInterstitial();
+    });
+
+    // test rewarded video ad
+    $('#btn_preparevideo').click(function(){
+      AdMob.prepareRewardVideoAd({
+        adId:admobid.rewardvideo,
+        autoShow: $('#autoshowvideo').is(':checked'),
+      });
+    });
+
+    $('#btn_showvideo').click(function(){
+      AdMob.showRewardVideoAd();
+    });
+
+    // test case for #256, https://github.com/floatinghotpot/cordova-admob-pro/issues/256
+    $(document).on('backbutton', function(){
+      if(window.confirm('Are you sure to quit?')) navigator.app.exitApp();
+    });
+
+    // test case #283, https://github.com/floatinghotpot/cordova-admob-pro/issues/283
+    $(document).on('resume', function(){
+      AdMob.showInterstitial();
+    });
+  }
+
+  // test the webview resized properly
+  $(window).resize(function(){
+    $('#textinfo').html('web view: ' + $(window).width() + " x " + $(window).height());
+  });
+
+  $(document).ready(function(){
+    $('#btn_showfull').prop('disabled', true);
+    $('#btn_showvideo').prop('disabled', true);
+
+    // on mobile device, we must wait the 'deviceready' event fired by cordova
+    if(/(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent)) {
+      document.addEventListener('deviceready', onDeviceReady, false);
+    } else {
+      onDeviceReady();
+    }
+  });
+
+</script>
+    <article>
+  <!-- START HERE -->
+    <div class="container">
+    <div class="row align-items-center justify-content-center">
+        <div class="btn-group btn-group-toggle" data-toggle="button" id="powerButtons">
+            <label class="btn btn-dark" onclick="stop();stopSound();" ontouch="stop();stopSound();">
+            <input type="radio" name="options" id="power" autocomplete="off" checked>&emsp;&nbsp;<i class="fa fa-power-off"></i>&nbsp;&emsp;
+            </label>
+            <label class="btn btn-dark" onclick="slow();playSlow();stopOnOne();">
+            <input type="radio" name="radio" id="one" autocomplete="off">&emsp;&nbsp;1&nbsp;&emsp; 
+            </label>
+            <label class="btn btn-dark" onclick="medium();playMedium();stopOnTwo();">
+            <input type="radio" name="radio" id="two" autocomplete="off">&emsp;&nbsp;2&nbsp;&emsp;
+            </label>
+           <label class="btn btn-dark" onclick="fast();playFast();stopOnThree();">
+           <input type="radio" name="radio" id="three" autocomplete="off">&emsp;&nbsp;3&nbsp;&emsp;
+           </label>
+        </div>
+        </div>
+    </div>
+    
+    
+    
+         <div class="container" id="anime">
+         <div class="row align-items-center justify-content-center">
+       <img src="blades.png" id="blades" class="rotors"/>
+       <img src="box1.png" id="fanBox" class="box"/>
+             </div>
+             </div>
+    </article>
+<script>
+var rotors = document.getElementById("blades");
+
+function slow() {
+  rotors.style.animationDuration = ".10s";
+
+}
+function medium() {
+  rotors.style.animationDuration = ".15s";
+}
+function fast() {
+  rotors.style.animationDuration = ".20s";
+}
+function stop() {
+  rotors.style.animationDuration = "0s";
+}
+function playSlow() {
+ var audio = document.getElementById("audio1");
+  audio.loop= "true";
+ audio.play()
+ audio.addEventListener('timeupdate', function() {
+     var buffer = 0.44;
+     if (this.currentTime > this.duration - buffer) {
+         this.currentTime = 0
+         this.play()
+     }}, false);
+}
+function playMedium() {
+ var audio = document.getElementById("audio2");
+ audio.loop= "true";
+ audio.play()
+ audio.addEventListener('timeupdate', function() {
+     var buffer = 0.30;
+     if (this.currentTime > this.duration - buffer) {
+         this.currentTime = 0
+         this.play()
+     }}, false);
+}  
+function playFast() {
+ var audio = document.getElementById("audio3");
+ audio.loop= "true";
+ audio.play()
+ audio.addEventListener('timeupdate', function() {
+     var buffer = 0.30;
+     if (this.currentTime > this.duration - buffer) {
+         this.currentTime = 0
+         this.play()
+     }}, false);
+}
+function stopSound() {
+var audio = document.getElementById("audio1");
+ audio.pause() 
+var audio = document.getElementById("audio2");
+ audio.pause()
+ var audio = document.getElementById("audio3");
+ audio.pause()
+}  
+function stopOnOne() {
+var audio = document.getElementById("audio2");
+ audio.pause() 
+var audio = document.getElementById("audio3");
+ audio.pause()
+}
+function stopOnTwo() {
+var audio = document.getElementById("audio1");
+ audio.pause() 
+var audio = document.getElementById("audio3");
+ audio.pause()
+}
+function stopOnThree() {
+var audio = document.getElementById("audio1");
+ audio.pause() 
+var audio = document.getElementById("audio2");
+ audio.pause()
+}
+        
+</script>
+    
+    <audio id="audio1" src="fansound1.wav"></audio>
+    <audio id="audio2" src="fansound2.wav"></audio>
+    <audio id="audio3" src="fansound3.wav"></audio>
+
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+</html>
